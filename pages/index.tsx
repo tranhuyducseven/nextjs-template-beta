@@ -1,4 +1,3 @@
-import { DefaultLayout } from "@layouts/DefaultLayout";
 import dynamic from "next/dynamic";
 
 const AppScreen = dynamic(

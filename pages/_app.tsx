@@ -3,10 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { DefaultLayout } from "@layouts/DefaultLayout";
 import { MainLayout } from "@layouts/MainLayout";
-import {
-  TransitionLayout,
-  TransitionLayout as TransitionLayoutStatic,
-} from "@layouts/TransitionLayout";
+import { TransitionLayout } from "@layouts/TransitionLayout";
 import { ThemeProvider as ThemeProviderStatic } from "@material-tailwind/react";
 import type { AppProps } from "next/app";
 import dynamic from "next/dynamic";
