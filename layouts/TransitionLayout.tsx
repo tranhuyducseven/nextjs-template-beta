@@ -1,67 +1,35 @@
 import {
-  Transition as ReactTransition,
-  TransitionGroup,
-  TransitionStatus,
-} from "react-transition-group";
+  AnimationControls,
+  motion,
+  Target,
+  TargetAndTransition,
+  VariantLabels,
+} from "framer-motion";
+import { useRouter } from "next/router";
 
-type TransitionKind<RC> = {
-  children: RC;
-  location: string;
-};
-
-const TIMEOUT = 200;
-
-type TTransitionStyles = {
-  [key in TransitionStatus]?: {
-    [key: string]: string | number;
-  };
-};
-
-const TransitionStyles: TTransitionStyles = {
-  entering: {
-    position: "absolute",
-    opacity: 0,
-    transform: "translateX(50px)",
-  },
-  entered: {
-    transition: `opacity ${TIMEOUT}ms ease-in-out, transform ${TIMEOUT}ms ease-in-out`,
-    opacity: 1,
-    transform: "translateX(0px)",
-    animation: "blink .3s linear 2",
-  },
-  exiting: {
-    transition: `opacity ${TIMEOUT}ms ease-in-out, transform ${TIMEOUT}ms ease-in-out`,
-    opacity: 0,
-    transform: "translateX(-50px)",
-  },
-};
-
-const TransitionLayout: React.FC<TransitionKind<React.ReactNode>> = function ({
+export const TransitionLayout: IComponent<{
+  id?: string;
+  initial?: boolean | Target | VariantLabels;
+  animate?: AnimationControls | TargetAndTransition | VariantLabels | boolean;
+}> = ({
+  id,
   children,
-  location,
-}) {
+  initial = { opacity: 0, y: 100 },
+  animate = { opacity: 1, y: 0 },
+}) => {
+  const router = useRouter();
+  const pathname = router.pathname;
+
+  const simplePathname = id ?? pathname.split("/")[2];
+
   return (
-    <TransitionGroup className="h-full relative">
-      <ReactTransition
-        key={location}
-        timeout={{
-          enter: TIMEOUT,
-          exit: TIMEOUT,
-        }}
-      >
-        {(status) => (
-          <div
-            className="absolute top-0 left-0 w-full h-full"
-            style={{
-              ...TransitionStyles[status],
-            }}
-          >
-            {children}
-          </div>
-        )}
-      </ReactTransition>
-    </TransitionGroup>
+    <motion.div
+      key={simplePathname}
+      initial={initial}
+      animate={animate}
+      className="h-full w-full z-0 duration-150"
+    >
+      {children}
+    </motion.div>
   );
 };
-
-export { TransitionLayout };

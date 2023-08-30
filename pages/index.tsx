@@ -1,5 +1,4 @@
-import { ComponentLoading } from "@components/ComponentLoading";
-import { ScreenLayout } from "@layouts/ScreenLayout";
+import { DefaultLayout } from "@layouts/DefaultLayout";
 import dynamic from "next/dynamic";
 
 const AppScreen = dynamic(
@@ -7,17 +6,13 @@ const AppScreen = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="h-screen">
-        <ComponentLoading />
-      </div>
+      <main className="w-screen h-screen flex items-center justify-center">
+        Loading...
+      </main>
     ),
   }
 );
 
-const Home: IPageComponent = () => {
-  return <AppScreen />;
-};
-
-Home.getLayout = (screen) => <ScreenLayout>{screen}</ScreenLayout>;
+const Home: IPageComponent = () => <AppScreen />;
 
 export default Home;
